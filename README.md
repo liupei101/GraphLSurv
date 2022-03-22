@@ -1,7 +1,7 @@
 # GraphLSurv 
-Repo of source code of a paper "GraphLSurv: Adaptive Structure Learning of Histopathological Whole-Slide Images for Survival Prediction". (Submitted to TMI, under-review)
+Repo of source code of a paper "GraphLSurv: Adaptive Structure Learning of Histopathological Whole-Slide Images for Survival Prediction". (Submitted to IEEE JBHI, under-review)
 
-**Note** that current version is only for peer-reviewing. More details of this project will be published in this repo upon acceptance. Questions or communications are welcomed.
+**Note** that current version is only for peer-reviewing. More details of this project will be published here upon acceptance. Questions or communications are welcomed.
 
 ## WSI Preprocessing
 
@@ -34,7 +34,7 @@ Also, Prognostic power is evaluated by comparing the differences between high- a
 
 Ablations include:
 - Adaptive graph's effects on the model
-- Exploration to adaptive graphs with different connection strength.
+- Exploration to adaptive graphs with different sparsity
 - Model architecture: mix GCN-HMP or pure GCN-HMP
 
 ### Visualization
