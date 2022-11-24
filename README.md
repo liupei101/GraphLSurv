@@ -1,5 +1,5 @@
 # GraphLSurv 
-Source code of the paper titled "GraphLSurv: Adaptive Structure Learning of Histopathological Whole-Slide Images for Survival Prediction". (Submitted to CMPB, under-review)
+Source code of the paper titled "GraphLSurv: A Scalable Survival Prediction Network with Adaptive and Sparse Structure Learning for Histopathological Whole-Slide Images". (Submitted to CMPB, under-review)
 
 **Note:** current version is used for peer-review. 
 
