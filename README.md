@@ -1,9 +1,7 @@
 # GraphLSurv 
-Source code of the paper titled "GraphLSurv: A Scalable Survival Prediction Network with Adaptive and Sparse Structure Learning for Histopathological Whole-Slide Images". (Submitted to CMPB, under-review)
+Source code of the paper titled "**GraphLSurv: A Scalable Survival Prediction Network with Adaptive and Sparse Structure Learning for Histopathological Whole-Slide Images**", published in the journal *Computer Methods and Programs in Medicine*.
 
-**Note:** current version is used for peer-review. 
-
-More introduction of this repo will be added upon acceptance. Questions or communications are still welcomed.
+More descriptions will be presented soon. Questions or communications are welcomed.
 
 ## WSI Preprocessing
 
