@@ -1,8 +1,11 @@
 # GraphLSurv 
-Source code of the paper titled "**GraphLSurv: A Scalable Survival Prediction Network with Adaptive and Sparse Structure Learning for Histopathological Whole-Slide Images**" and published in *Computer Methods and Programs in Medicine*. Details are available at DOI: [10.1016/j.cmpb.2023.107433](https://doi.org/10.1016/j.cmpb.2023.107433).
+Source code of the paper titled "**GraphLSurv: A Scalable Survival Prediction Network with Adaptive and Sparse Structure Learning for Histopathological Whole-Slide Images**" and published in *Computer Methods and Programs in Medicine*. The paper is available at DOI: [10.1016/j.cmpb.2023.107433](https://doi.org/10.1016/j.cmpb.2023.107433).
 
 *TLDR*
 > This work presented a scalable framework for estimating survival from patient's histopathological Whole-Slide Images (WSIs). In this framework, an adaptive and sparse graph structure is employed to describe each gigapixel WSI and then learn a global representation for prediction. This work absorbed an effecient anchor-based technique to handle very large-scale graphs. We proved that an adaptive and sparse graph structure could be more suitable for WSI-based survival prediction, compared to those densely-connected strutures like that adopted in Transformer. 
+
+GraphLSurv overview:
+![GraphLSurv framework](./S02-modeling/tools/graphlsurv-overview.png)
 
 There are two steps for WSI-based survival prediction: *WSI Preprocessing* and *GraphLSurv Modeling*. We show them below.
 
