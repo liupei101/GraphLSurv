@@ -47,10 +47,10 @@ def compute_w_loader(file_path, output_path, wsi, model,
 
 	mode = 'w'
 	for count, (batch, coords) in enumerate(loader):
-		with torch.no_grad():	
+		with torch.no_grad():
 			if count % print_every == 0:
 				print('batch {}/{}, {} files processed'.format(count, len(loader), count * batch_size))
-			batch = batch.to(device, non_blocking=True)
+			batch = batch.to(device)
 			mini_bs = coords.shape[0]
 			
 			features = model(batch)
@@ -70,6 +70,7 @@ parser.add_argument('--data_slide_dir', type=str, default=None)
 parser.add_argument('--slide_ext', type=str, default= '.svs')
 parser.add_argument('--csv_path', type=str, default=None)
 parser.add_argument('--feat_dir', type=str, default=None)
+parser.add_argument('--patch_size', type=int, default=256)
 parser.add_argument('--batch_size', type=int, default=256)
 parser.add_argument('--no_auto_skip', default=False, action='store_true')
 parser.add_argument('--custom_downsample', type=int, default=1)
@@ -79,6 +80,7 @@ parser.add_argument('--sampler', default=None, type=str)
 parser.add_argument('--sampler_size', default=1000, type=int)
 parser.add_argument('--sampler_pool_size', default=1200, type=int)
 parser.add_argument('--sampler_seed', default=42, type=int)
+parser.add_argument('--cnorm_method', default='macenko', type=str, help='macenko or vahadane')
 parser.add_argument('--color_norm', default=False, action='store_true')
 args = parser.parse_args()
 
@@ -102,9 +104,13 @@ if __name__ == '__main__':
 	'pool_size': args.sampler_pool_size, 'seed': args.sampler_seed}
 
 	color_normalizer = None
-	if args.color_norm:
+	if args.color_norm is not None:
 		# color normalization for pathology images
-		color_normalizer = get_color_normalizer(256)
+		# method is 'macenko' or 'vahadane'
+		if args.patch_size >= 256:
+			color_normalizer = get_color_normalizer(args.patch_size, cn_method=args.cnorm_method)
+		else:
+			color_normalizer = get_color_normalizer(256, cn_method=args.cnorm_method)
 
 	print('loading model checkpoint')
 	model = resnet50_baseline(pretrained=True)
@@ -118,6 +124,7 @@ if __name__ == '__main__':
 	total = len(bags_dataset)
 
 	for bag_candidate_idx in range(total):
+		#bag_candidate_idx = total - 1 - bag_candidate_idx
 		slide_name = bags_dataset[bag_candidate_idx].split(args.slide_ext)[0]
 		slide_id = get_slide_id(slide_name, has_ext=False, in_child_dir=args.slide_in_child_dir)
 		bag_name = slide_id+'.h5'

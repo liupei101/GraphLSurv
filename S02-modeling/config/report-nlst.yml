@@ -1,21 +1,21 @@
 # task
-task: GraphLSurv # GraphPredict
-experiment_type: sim # std-hpopt std-perfm
+task: GraphLSurv
+experiment_type: sim
 random_state: 42
 
 # output
-save_path: ./results-preview/NLST/GraphLSurv-Ablation-Added
+save_path: ./result/NLST/GraphLSurv
 
 # spliting
-seed_split: [29, 44, 46, 55, 86]
-data_split: ./data_split/nlst/nlst-seed{}.npz
+seed_split: [0, 1, 2, 3, 4]
+data_split: ./data_split/nlst/nlst-split{}.npz
 
 # data
 dataset_name: nlst
-dir_sld_feat: /home/liup/data/NLST/feats-l1-s256-mrandom_be-n1000-color_norm/h5_files
+dir_sld_feat: /data/NLST/feats-l1-s256-mrandom_be-n1000-color_norm/h5_files
 k_knn_graph: 10
-dir_pat_graph: /home/liup/data/NLST/feats-l1-s256-mrandom_be-n1000-color_norm/graph-knn-k{}-t0
-path_csv: /home/liup/data/NLST/nlst_path_full.csv
+dir_pat_graph: /data/NLST/feats-l1-s256-mrandom_be-n1000-color_norm/graph-knn-k{}-t0
+path_csv: /data/NLST/nlst_path_full.csv
 undirect_graph: True
 split_stratify: False
 save_prediction: True
@@ -35,7 +35,7 @@ patience: 10
 
 # graph_learn_regularization
 graph_reg: True
-smoothness_ratio: 0.3
+smoothness_ratio: 0.3 # respective to \alpha
 degree_ratio: 0.00
 sparsity_ratio: 0.00
 
@@ -43,7 +43,7 @@ sparsity_ratio: 0.00
 model_in_dim: 1024
 model_hid_dim: 128
 model_out_dim: 1
-model_num_layers: 1
+model_num_layers: 1 # respective to the number of GCN-HMP layers
 model_dropout_ratio: 0.6
 
 # loss
@@ -52,14 +52,14 @@ reg_l1: 0.00001
 
 # anchor graph learner layer
 agl_hid_dim: 128
-agl_ratio_anchors: 0.2
-agl_epsilon: [0.8, 0.9]
+agl_ratio_anchors: 0.2 # respective to the value of r/s
+agl_epsilon: 0.8 # respective to \delta
 agl_topk: null
 agl_metric_type: transformer
 
 # anchor graph encoder layer
-age_graph_hops: 1
-age_ratio_init_graph: [0.7, 0.9]
+age_graph_hops: 1 # respective to # standard GCN layers in one GCN-HMP layer, viewed as 1 x GCN-HMP if it is 1
+age_ratio_init_graph: 0.0 # respective to \lambda
 age_dropout_ratio: 0.6
 age_batch_norm: False
 

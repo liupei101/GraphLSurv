@@ -108,14 +108,18 @@ def calc_patches_energy(wsi_object, patch_coords, patch_level, patch_size):
 def color_normalization(img, normalizer):
 	"""
 	:img: numpy.ndarray with shape of [H, W, C]
-	"normalizer: class torchstain.MacenkoNormalizer
+	"normalizer: class staintools.StainNormalizer or torchstain.MacenkoNormalizer
 
 	:return
 	    torch.Tensor() with shape of [C, H, W]
 	"""
 	img = staintools.LuminosityStandardizer.standardize(img)
 	try:
-		rimg = normalizer.normalize(T(img), stains=False)[0]
+		if isinstance(normalizer, torchstain.normalizers.torch_macenko_normalizer.TorchMacenkoNormalizer):
+			rimg = normalizer.normalize(T(img), stains=False)[0]
+		else:
+			rimg = normalizer.transform(img)
+			rimg = torch.from_numpy(img)
 	except Exception as e:
 		print("skiped color norm.")
 		rimg = torch.from_numpy(img)
@@ -124,15 +128,20 @@ def color_normalization(img, normalizer):
 
 	return rimg
 
-def get_color_normalizer(size):
+def get_color_normalizer(size, cn_method='macenko'):
+	assert cn_method in ['macenko', 'vahadane']
 	template_path = './docs/template-%d.jpg' % size
 	print("[INFO] Color Normalizer: template image is from %s" % template_path)
 	target = staintools.read_image(template_path)
 	target = staintools.LuminosityStandardizer.standardize(target)
-	torch_normalizer = torchstain.MacenkoNormalizer(backend='torch')
-	torch_normalizer.fit(T(target))
+	if cn_method == 'macenko':
+		normalizer = torchstain.MacenkoNormalizer(backend='torch')
+		normalizer.fit(T(target))
+	else:
+		normalizer = staintools.StainNormalizer(method='vahadane')
+		normalizer.fit(target)
 
-	return torch_normalizer
+	return normalizer
 
 class SubsetSequentialSampler(Sampler):
 	"""Samples elements sequentially from a given list of indices, without replacement.
